@@ -150,7 +150,8 @@
           "date": {
             "type": "string",
             "description": "The study procedure date",
-            "example": "2023-12-21"
+            "example": "2023-12-21",
+            "nullable": true
           },
           "protocol": {
             "$ref": "#/components/schemas/Protocol"

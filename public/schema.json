@@ -11,8 +11,8 @@
   },
   "tags": [
     {
-      "name": "Example",
-      "description": "Example endpoints"
+      "name": "Study Procedures",
+      "description": "Endpoints for study procedures"
     }
   ],
   "servers": [
@@ -26,32 +26,59 @@
     }
   ],
   "paths": {
-    "/example": {
+    "/api/v1/accounts/{account_id}/sites/{site_id}/subjects/{subject_number}/study_events/{study_event_identifier}/study_procedures": {
       "get": {
-        "summary": "Example endpoint",
+        "summary": "Get all study procedures for a study event",
         "security": [
           {
-            "userSessionKey": []
-          },
-          {
+            "userSessionKey": [],
             "chillipharmSession": []
           }
         ],
-        "operationId": "getExample",
-        "description": "This is an example endpoint",
+        "tags": ["Study Procedures"],
+        "operationId": "getStudyProcedures",
+        "description": "Get all study procedures for a study event",
         "parameters": [
           {
-            "name": "example",
-            "in": "query",
-            "description": "Example parameter",
+            "name": "account_id",
+            "in": "path",
+            "description": "The account id",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "example": "1"
+            }
+          },
+          {
+            "name": "site_id",
+            "in": "path",
+            "description": "The site id",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "1"
+            }
+          },
+          {
+            "name": "subject_number",
+            "in": "path",
+            "description": "The subject number",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "12345678"
+            }
+          },
+          {
+            "name": "study_event_identifier",
+            "in": "path",
+            "description": "The study event identifier",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "VISIT1"
             }
           }
-        ],
-        "tags": [
-          "Example"
         ],
         "responses": {
           "200": {
@@ -59,7 +86,10 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ExampleResponse"
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/StudyProcedure"
+                  }
                 }
               }
             }
@@ -68,7 +98,10 @@
             "$ref": "#/components/responses/BadRequest"
           },
           "401": {
-            "$ref": "#/components/responses/Unauthorized"
+            "$ref": "#/components/responses/Unauthorised"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
           },
           "409": {
             "$ref": "#/components/responses/Conflict"
@@ -96,11 +129,177 @@
       }
     },
     "schemas": {
-      "ExampleResponse": {
+      "StudyProcedure": {
         "type": "object",
         "properties": {
-          "example": {
-            "type": "string"
+          "id": {
+            "type": "integer",
+            "description": "The study procedure id",
+            "example": 1
+          },
+          "identifier": {
+            "type": "string",
+            "description": "The study procedure identifier",
+            "example": "P1"
+          },
+          "display_name": {
+            "type": "string",
+            "description": "The study procedure display name",
+            "example": "p1"
+          },
+          "date": {
+            "type": "string",
+            "description": "The study procedure date",
+            "example": "2023-12-21"
+          },
+          "protocol": {
+            "$ref": "#/components/schemas/Protocol"
+          },
+          "role_definitions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RoleDefinition"
+            }
+          },
+          "status": {
+            "type": "string",
+            "description": "The study procedure status",
+            "example": "in_progress"
+          }
+        }
+      },
+      "Protocol": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "The protocol id",
+            "example": 1
+          },
+          "name": {
+            "type": "string",
+            "description": "The protocol name",
+            "example": "Beta Protocol"
+          },
+          "study_event_display_name": {
+            "$ref": "#/components/schemas/DisplayName"
+          },
+          "study_procedure_display_name": {
+            "$ref": "#/components/schemas/DisplayName"
+          },
+          "locked": {
+            "type": "boolean",
+            "description": "Whether the protocol is locked",
+            "example": true
+          },
+          "version_number": {
+            "type": "integer",
+            "description": "The protocol version number",
+            "example": 0
+          },
+          "study_procedure_role_definitions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/StudyProcedureRoleDefinition"
+            }
+          }
+        }
+      },
+      "DisplayName": {
+        "type": "object",
+        "properties": {
+          "singular": {
+            "type": "string",
+            "description": "The singular display name",
+            "example": "visit"
+          },
+          "plural": {
+            "type": "string",
+            "description": "The plural display name",
+            "example": "visits"
+          }
+        }
+      },
+      "RoleDefinition": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "The role definition id",
+            "example": 1
+          },
+          "required": {
+            "type": "boolean",
+            "description": "Whether the role definition is required",
+            "example": true
+          },
+          "contributors": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Contributor"
+            }
+          },
+          "role": {
+            "$ref": "#/components/schemas/Role"
+          }
+        }
+      },
+      "StudyProcedureRoleDefinition": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "The study procedure role definition id",
+            "example": 1
+          },
+          "required": {
+            "type": "boolean",
+            "description": "Whether the study procedure role definition is required",
+            "example": true
+          },
+          "role": {
+            "$ref": "#/components/schemas/Role"
+          }
+        }
+      },
+      "Contributor": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "The contributor id",
+            "example": 1
+          },
+          "first_name": {
+            "type": "string",
+            "description": "The contributor first name",
+            "example": "John"
+          },
+          "last_name": {
+            "type": "string",
+            "description": "The contributor last name",
+            "example": "Doe"
+          },
+          "email": {
+            "type": "string",
+            "description": "The contributor email",
+            "example": "test@gmail.com",
+            "format": "email"
+          }
+        }
+      },
+      "Role": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "The role id",
+            "example": 1
+          },
+          "name": {
+            "type": "string",
+            "description": "The role name",
+            "example": "Principal Investigator"
           }
         }
       },
@@ -127,12 +326,44 @@
           }
         }
       },
-      "Unauthorized": {
-        "description": "Unauthorized. Missing or invalid authentication credentials.",
+      "Unauthorised": {
+        "description": "Unauthorised. Missing or invalid authentication credentials.",
         "content": {
           "application/json": {
             "schema": {
-              "$ref": "#/components/schemas/Error"
+              "description": "An error",
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "description": "The error message",
+                  "example": "Unauthorised",
+                  "enum": ["Unauthorised"]
+                }
+              },
+              "required": ["error"],
+              "additionalProperties": false
+            }
+          }
+        }
+      },
+      "NotFound": {
+        "description": "Not found. The requested resource was not found.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "description": "An error",
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "description": "The error message",
+                  "example": "Not found",
+                  "enum": ["Not found"]
+                }
+              },
+              "required": ["error"],
+              "additionalProperties": false
             }
           }
         }

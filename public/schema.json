@@ -26,7 +26,7 @@
     }
   ],
   "paths": {
-    "/api/v1/accounts/{account_id}/sites/{site_id}/subjects/{subject_number}/study_events/{study_event_identifier}/study_procedures": {
+    "/api/v1/accounts/{account_id}/sites/{site_identifier}/subjects/{subject_number}/study_events/{study_event_identifier}/study_procedures": {
       "get": {
         "summary": "Get all study procedures for a study event",
         "security": [
@@ -50,13 +50,13 @@
             }
           },
           {
-            "name": "site_id",
+            "name": "site_identifier",
             "in": "path",
-            "description": "The site id",
+            "description": "The site identifier",
             "required": true,
             "schema": {
               "type": "string",
-              "example": "1"
+              "example": "SITE1"
             }
           },
           {

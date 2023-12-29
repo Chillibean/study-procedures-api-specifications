@@ -209,6 +209,132 @@
             "$ref": "#/components/responses/InternalServerError"
           }
         }
+      },
+      "put": {
+        "summary": "Update a study procedure",
+        "security": [
+          {
+            "userSessionKey": [],
+            "chillipharmSession": []
+          }
+        ],
+        "tags": ["Study Procedures"],
+        "operationId": "updateStudyProcedure",
+        "description": "Update a study procedure",
+        "parameters": [
+          {
+            "name": "account_id",
+            "in": "path",
+            "description": "The account id",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "1"
+            }
+          },
+          {
+            "name": "site_identifier",
+            "in": "path",
+            "description": "The site identifier",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "SITE1"
+            }
+          },
+          {
+            "name": "subject_number",
+            "in": "path",
+            "description": "The subject number",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "12345678"
+            }
+          },
+          {
+            "name": "study_event_identifier",
+            "in": "path",
+            "description": "The study event identifier",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "VISIT1"
+            }
+          },
+          {
+            "name": "study_procedure_identifier",
+            "in": "path",
+            "description": "The study procedure identifier",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "PROC1"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "The study procedure",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "date": {
+                    "type": "string",
+                    "description": "The study procedure date",
+                    "example": "2023-12-21",
+                    "nullable": true
+                  },
+                  "status": {
+                    "type": "string",
+                    "description": "The study procedure status",
+                    "example": "in_progress",
+                    "nullable": true
+                  },
+                  "contributors": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "study_procedure_role_definition_id": {
+                          "type": "integer",
+                          "description": "The study procedure role definition id",
+                          "example": 1
+                        },
+                        "user_id": {
+                          "type": "integer",
+                          "description": "The user id",
+                          "example": 1
+                        }
+                      }
+                    },
+                    "nullable": true
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StudyProcedure"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorised"
+          }
+        }
       }
     }
   },
@@ -266,7 +392,17 @@
             "description": "The study procedure status",
             "example": "in_progress"
           }
-        }
+        },
+        "required": [
+          "id",
+          "identifier",
+          "display_name",
+          "date",
+          "protocol",
+          "role_definitions",
+          "status"
+        ],
+        "additionalProperties": false
       },
       "Protocol": {
         "type": "object",
@@ -303,7 +439,17 @@
               "$ref": "#/components/schemas/StudyProcedureRoleDefinition"
             }
           }
-        }
+        },
+        "required": [
+          "id",
+          "name",
+          "study_event_display_name",
+          "study_procedure_display_name",
+          "locked",
+          "version_number",
+          "study_procedure_role_definitions"
+        ],
+        "additionalProperties": false
       },
       "DisplayName": {
         "type": "object",
@@ -318,7 +464,9 @@
             "description": "The plural display name",
             "example": "visits"
           }
-        }
+        },
+        "required": ["singular", "plural"],
+        "additionalProperties": false
       },
       "RoleDefinition": {
         "type": "object",
@@ -342,7 +490,9 @@
           "role": {
             "$ref": "#/components/schemas/Role"
           }
-        }
+        },
+        "required": ["id", "required", "contributors", "role"],
+        "additionalProperties": false
       },
       "StudyProcedureRoleDefinition": {
         "type": "object",
@@ -360,7 +510,9 @@
           "role": {
             "$ref": "#/components/schemas/Role"
           }
-        }
+        },
+        "required": ["id", "required", "role"],
+        "additionalProperties": false
       },
       "Contributor": {
         "type": "object",
@@ -386,7 +538,9 @@
             "example": "test@gmail.com",
             "format": "email"
           }
-        }
+        },
+        "required": ["id", "first_name", "last_name", "email"],
+        "additionalProperties": false
       },
       "Role": {
         "type": "object",
@@ -401,7 +555,9 @@
             "description": "The role name",
             "example": "Principal Investigator"
           }
-        }
+        },
+        "required": ["id", "name"],
+        "additionalProperties": false
       },
       "Error": {
         "description": "An error",

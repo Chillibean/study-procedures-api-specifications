@@ -408,7 +408,7 @@
             "description": "The study event status",
             "example": "in_progress"
           },
-          "study_procedures": {
+          "procedures": {
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/StudyProcedure"
@@ -422,6 +422,16 @@
           },
           "protocol": {
             "$ref": "#/components/schemas/Protocol"
+          },
+          "study_event_type": {
+            "type": "string",
+            "description": "The study event type",
+            "example": "visit"
+          },
+          "position": {
+            "type": "integer",
+            "description": "The study event position",
+            "example": 1
           }
         },
         "required": [

@@ -417,7 +417,8 @@
           "study_arm": {
             "type": "string",
             "description": "The study arm",
-            "example": "Arm 1"
+            "example": "Arm 1",
+            "nullable": true
           },
           "protocol": {
             "$ref": "#/components/schemas/Protocol"

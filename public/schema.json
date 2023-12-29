@@ -440,9 +440,11 @@
           "display_name",
           "date",
           "status",
-          "study_procedures",
+          "procedures",
           "study_arm",
-          "protocol"
+          "protocol",
+          "study_event_type",
+          "position"
         ],
         "additionalProperties": false
       },

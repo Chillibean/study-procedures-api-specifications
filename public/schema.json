@@ -323,7 +323,20 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/StudyProcedure"
+                  "type": "object",
+                  "properties": {
+                    "schedule": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/StudyEvent"
+                      }
+                    },
+                    "study_procedure": {
+                      "$ref": "#/components/schemas/StudyProcedure"
+                    }
+                  },
+                  "required": ["schedule", "study_procedure"],
+                  "additionalProperties": false
                 }
               }
             }
@@ -366,6 +379,62 @@
       }
     },
     "schemas": {
+      "StudyEvent": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "The study event id",
+            "example": 1
+          },
+          "identifier": {
+            "type": "string",
+            "description": "The study event identifier",
+            "example": "V1"
+          },
+          "display_name": {
+            "type": "string",
+            "description": "The study event display name",
+            "example": "v1"
+          },
+          "date": {
+            "type": "string",
+            "description": "The study event date",
+            "example": "2023-12-21",
+            "nullable": true
+          },
+          "status": {
+            "type": "string",
+            "description": "The study event status",
+            "example": "in_progress"
+          },
+          "study_procedures": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/StudyProcedure"
+            }
+          },
+          "study_arm": {
+            "type": "string",
+            "description": "The study arm",
+            "example": "Arm 1"
+          },
+          "protocol": {
+            "$ref": "#/components/schemas/Protocol"
+          }
+        },
+        "required": [
+          "id",
+          "identifier",
+          "display_name",
+          "date",
+          "status",
+          "study_procedures",
+          "study_arm",
+          "protocol"
+        ],
+        "additionalProperties": false
+      },
       "StudyProcedure": {
         "type": "object",
         "properties": {

@@ -436,9 +436,16 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Task"
+                  "type": "object",
+                  "properties": {
+                    "tasks": {
+                      "$ref": "#/components/schemas/Task"
+                    },
+                    "tasks_complete": {
+                      "type": "boolean",
+                      "description": "Whether all tasks are completed",
+                      "example": true
+                    }
                   }
                 }
               }

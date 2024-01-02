@@ -439,7 +439,10 @@
                   "type": "object",
                   "properties": {
                     "tasks": {
-                      "$ref": "#/components/schemas/Task"
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Task"
+                      }
                     },
                     "tasks_complete": {
                       "type": "boolean",

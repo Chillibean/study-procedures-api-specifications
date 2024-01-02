@@ -13,6 +13,10 @@
     {
       "name": "Study Procedures",
       "description": "Endpoints for study procedures"
+    },
+    {
+      "name": "Study Procedure Tasks",
+      "description": "Endpoints for study procedure tasks"
     }
   ],
   "servers": [
@@ -361,6 +365,105 @@
           }
         }
       }
+    },
+    "/accounts/{account_id}/sites/{site_identifier}/subjects/{subject_number}/study_events/{study_event_identifier}/study_procedures/{study_procedure_identifier}/tasks": {
+      "get": {
+        "summary": "Get all tasks for a study procedure",
+        "security": [
+          {
+            "userSessionKey": [],
+            "chillipharmSession": []
+          }
+        ],
+        "tags": ["Study Procedure Tasks"],
+        "operationId": "getStudyProcedureTasks",
+        "description": "Get all tasks for a study procedure",
+        "parameters": [
+          {
+            "name": "account_id",
+            "in": "path",
+            "description": "The account id",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "1"
+            }
+          },
+          {
+            "name": "site_identifier",
+            "in": "path",
+            "description": "The site identifier",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "SITE1"
+            }
+          },
+          {
+            "name": "subject_number",
+            "in": "path",
+            "description": "The subject number",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "12345678"
+            }
+          },
+          {
+            "name": "study_event_identifier",
+            "in": "path",
+            "description": "The study event identifier",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "VISIT1"
+            }
+          },
+          {
+            "name": "study_procedure_identifier",
+            "in": "path",
+            "description": "The study procedure identifier",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "PROC1"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Task"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorised"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "409": {
+            "$ref": "#/components/responses/Conflict"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      }
     }
   },
   "components": {
@@ -379,6 +482,81 @@
       }
     },
     "schemas": {
+      "Task": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "The task id",
+            "example": "e390325f-d528-4704-80ec-1dec0f317267"
+          },
+          "completed_date": {
+            "type": "string",
+            "description": "The task completed date",
+            "example": "2024-01-02T10:52:00.000Z",
+            "nullable": true
+          },
+          "completed_by": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "integer",
+                "description": "The user id",
+                "example": 1
+              },
+              "email": {
+                "type": "string",
+                "description": "The user email",
+                "example": "test@gmail.com",
+                "format": "email"
+              },
+              "uuid": {
+                "type": "string",
+                "description": "The user uuid",
+                "example": "b5306b8d-7f02-4c46-9847-397ee95a8ebc"
+              },
+              "first_name": {
+                "type": "string",
+                "description": "The user first name",
+                "example": "John"
+              },
+              "last_name": {
+                "type": "string",
+                "description": "The user last name",
+                "example": "Doe"
+              }
+            },
+            "required": ["id", "email", "uuid", "first_name", "last_name"],
+            "additionalProperties": false
+          },
+          "display_name": {
+            "type": "string",
+            "description": "The task display name",
+            "example": "task1"
+          },
+          "locked": {
+            "type": "boolean",
+            "description": "Whether the task is locked",
+            "example": false
+          },
+          "completed": {
+            "type": "boolean",
+            "description": "Whether the task is completed",
+            "example": true
+          },
+          "roles": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Role"
+            }
+          },
+          "task_type": {
+            "type": "string",
+            "description": "The task type",
+            "example": "task"
+          }
+        }
+      },
       "StudyEvent": {
         "type": "object",
         "properties": {

@@ -537,7 +537,8 @@
               }
             },
             "required": ["id", "email", "uuid", "first_name", "last_name"],
-            "additionalProperties": false
+            "additionalProperties": false,
+            "nullable": true
           },
           "display_name": {
             "type": "string",

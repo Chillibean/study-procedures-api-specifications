@@ -11,12 +11,12 @@
   },
   "tags": [
     {
-      "name": "Study Procedures",
-      "description": "Endpoints for study procedures"
-    },
-    {
       "name": "Study Procedure Tasks",
       "description": "Endpoints for study procedure tasks"
+    },
+    {
+      "name": "Study Procedures",
+      "description": "Endpoints for study procedures"
     }
   ],
   "servers": [
@@ -430,6 +430,146 @@
             }
           }
         ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "tasks": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Task"
+                      }
+                    },
+                    "tasks_complete": {
+                      "type": "boolean",
+                      "description": "Whether all tasks are completed",
+                      "example": true
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorised"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "409": {
+            "$ref": "#/components/responses/Conflict"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      }
+    },
+    "/accounts/{account_id}/sites/{site_identifier}/subjects/{subject_number}/study_events/{study_event_identifier}/study_procedures/{study_procedure_identifier}/tasks/{id}": {
+      "put": {
+        "summary": "Updating a study procedure task",
+        "security": [
+          {
+            "userSessionKey": [],
+            "chillipharmSession": []
+          }
+        ],
+        "tags": ["Study Procedure Tasks"],
+        "operationId": "putStudyProcedureTasks",
+        "description": "Endpoint for updating study procedure tasks",
+        "parameters": [
+          {
+            "name": "account_id",
+            "in": "path",
+            "description": "The account id",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "1"
+            }
+          },
+          {
+            "name": "site_identifier",
+            "in": "path",
+            "description": "The site identifier",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "SITE1"
+            }
+          },
+          {
+            "name": "subject_number",
+            "in": "path",
+            "description": "The subject number",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "12345678"
+            }
+          },
+          {
+            "name": "study_event_identifier",
+            "in": "path",
+            "description": "The study event identifier",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "VISIT1"
+            }
+          },
+          {
+            "name": "study_procedure_identifier",
+            "in": "path",
+            "description": "The study procedure identifier",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "PROC1"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The task id",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "1"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "authenticity_token": {
+                    "type": "string",
+                    "description": "The auth token",
+                    "example": "dfasafdadfsdasfdfskafdadfsklfdksal"
+                  },
+                  "completed": {
+                    "type": "boolean",
+                    "description": "The task being completed or not",
+                    "example": true
+                  }
+                }
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
             "description": "OK",

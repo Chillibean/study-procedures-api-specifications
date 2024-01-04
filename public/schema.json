@@ -803,7 +803,7 @@
         },
         "responses": {
           "200": {
-            "description": "Created study procedure update record",
+            "description": "OK",
             "content": {
               "application/json": {
                 "schema": {

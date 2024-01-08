@@ -1,7 +1,7 @@
 {
   "openapi": "3.0.0",
   "info": {
-    "version": "1.1.0",
+    "version": "1.1.1",
     "title": "Study Procedures API",
     "description": "This is api specifications for all things related to study procedures",
     "contact": {
@@ -43,7 +43,9 @@
             "chillipharmSession": []
           }
         ],
-        "tags": ["Study Procedures"],
+        "tags": [
+          "Study Procedures"
+        ],
         "operationId": "getStudyProcedures",
         "description": "Get all study procedures for a study event",
         "parameters": [
@@ -132,7 +134,9 @@
             "chillipharmSession": []
           }
         ],
-        "tags": ["Study Procedures"],
+        "tags": [
+          "Study Procedures"
+        ],
         "operationId": "getStudyProcedure",
         "description": "Get a study procedure",
         "parameters": [
@@ -226,7 +230,9 @@
             "chillipharmSession": []
           }
         ],
-        "tags": ["Study Procedures"],
+        "tags": [
+          "Study Procedures"
+        ],
         "operationId": "updateStudyProcedure",
         "description": "Update a study procedure",
         "parameters": [
@@ -343,7 +349,10 @@
                       "$ref": "#/components/schemas/StudyProcedure"
                     }
                   },
-                  "required": ["schedule", "study_procedure"],
+                  "required": [
+                    "schedule",
+                    "study_procedure"
+                  ],
                   "additionalProperties": false
                 }
               }
@@ -379,7 +388,9 @@
             "chillipharmSession": []
           }
         ],
-        "tags": ["Study Procedure Tasks"],
+        "tags": [
+          "Study Procedure Tasks"
+        ],
         "operationId": "getStudyProcedureTasks",
         "description": "Get all tasks for a study procedure",
         "parameters": [
@@ -488,7 +499,9 @@
             "chillipharmSession": []
           }
         ],
-        "tags": ["Study Procedure Tasks"],
+        "tags": [
+          "Study Procedure Tasks"
+        ],
         "operationId": "putStudyProcedureTasks",
         "description": "Endpoint for updating study procedure tasks",
         "parameters": [
@@ -628,7 +641,9 @@
             "chillipharmSession": []
           }
         ],
-        "tags": ["Study Procedure Updates"],
+        "tags": [
+          "Study Procedure Updates"
+        ],
         "operationId": "getStudyProcedureUpdates",
         "description": "Get all update records for a study procedure",
         "parameters": [
@@ -725,7 +740,9 @@
             "chillipharmSession": []
           }
         ],
-        "tags": ["Study Procedure Updates"],
+        "tags": [
+          "Study Procedure Updates"
+        ],
         "operationId": "postStudyProcedureUpdate",
         "description": "Create a study procedure update record",
         "parameters": [
@@ -1113,7 +1130,10 @@
             "example": "visits"
           }
         },
-        "required": ["singular", "plural"],
+        "required": [
+          "singular",
+          "plural"
+        ],
         "additionalProperties": false
       },
       "RoleDefinition": {
@@ -1139,7 +1159,12 @@
             "$ref": "#/components/schemas/Role"
           }
         },
-        "required": ["id", "required", "contributors", "role"],
+        "required": [
+          "id",
+          "required",
+          "contributors",
+          "role"
+        ],
         "additionalProperties": false
       },
       "StudyProcedureRoleDefinition": {
@@ -1159,7 +1184,11 @@
             "$ref": "#/components/schemas/Role"
           }
         },
-        "required": ["id", "required", "role"],
+        "required": [
+          "id",
+          "required",
+          "role"
+        ],
         "additionalProperties": false
       },
       "Contributor": {
@@ -1187,7 +1216,12 @@
             "format": "email"
           }
         },
-        "required": ["id", "first_name", "last_name", "email"],
+        "required": [
+          "id",
+          "first_name",
+          "last_name",
+          "email"
+        ],
         "additionalProperties": false
       },
       "User": {
@@ -1220,7 +1254,13 @@
             "example": "Doe"
           }
         },
-        "required": ["id", "email", "uuid", "first_name", "last_name"],
+        "required": [
+          "id",
+          "email",
+          "uuid",
+          "first_name",
+          "last_name"
+        ],
         "additionalProperties": false,
         "nullable": true
       },
@@ -1238,7 +1278,10 @@
             "example": "Principal Investigator"
           }
         },
-        "required": ["id", "name"],
+        "required": [
+          "id",
+          "name"
+        ],
         "additionalProperties": false
       },
       "Error": {
@@ -1276,10 +1319,14 @@
                   "type": "string",
                   "description": "The error message",
                   "example": "Unauthorised",
-                  "enum": ["Unauthorised"]
+                  "enum": [
+                    "Unauthorised"
+                  ]
                 }
               },
-              "required": ["error"],
+              "required": [
+                "error"
+              ],
               "additionalProperties": false
             }
           }
@@ -1297,10 +1344,14 @@
                   "type": "string",
                   "description": "The error message",
                   "example": "Not found",
-                  "enum": ["Not found"]
+                  "enum": [
+                    "Not found"
+                  ]
                 }
               },
-              "required": ["error"],
+              "required": [
+                "error"
+              ],
               "additionalProperties": false
             }
           }
